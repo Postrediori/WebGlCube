@@ -1,7 +1,7 @@
 
 ## WebGL Cube
 
-![WebGL Cube Screenshot](images/WebGlCubeScreenshot.png)
+![WebGL Cube Screenshot](images/WebGlCubeScreenshot2.png)
 
 While porting old C-style OpenGL code to WebGL it turned out `gl.lineWidth` has a lot of drawbacks in the WebGL standard. This is a simple demo of a solid cube with edges outlined with `polygonOffset` and `POLYGON_OFFSET_FILL`.
 

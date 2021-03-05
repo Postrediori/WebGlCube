@@ -8,8 +8,11 @@ var QUAD_VERTEX_SOURCE = [
     'uniform mat4 u_projection;',
     'uniform mat4 u_view;',
     'uniform mat4 u_model;',
+    
+    'varying vec3 v_pos;',
 
     'void main (void) {',
+        'v_pos = a_position;',
         'gl_Position = u_projection * u_view * u_model * vec4(a_position, 1.0);',
     '}',
 ].join('\n');
@@ -18,10 +21,11 @@ var QUAD_FRAGMENT_SOURCE = [
     '#version 100',
     'precision highp float;',
 
-    'uniform vec3 u_color;',
+    'uniform vec3 u_shade;',
+    'varying vec3 v_pos;',
 
     'void main (void) {',
-        'gl_FragColor = vec4(u_color, 1.0);',
+        'gl_FragColor = vec4((v_pos + vec3(.5))*u_shade, 1.);',
     '}',
 ].join('\n');
 
@@ -125,7 +129,7 @@ var Simulator = function(canvas, width, height) {
         gl.uniformMatrix4fv(quadProgram.uniformLocations['u_view'], false, viewMatrix);
         gl.uniformMatrix4fv(quadProgram.uniformLocations['u_model'], false, modelMatrix);
 
-        gl.uniform3fv(quadProgram.uniformLocations['u_color'], quadColor);
+        gl.uniform3fv(quadProgram.uniformLocations['u_shade'], quadColor);
 
         // Draw Cube Faces
         gl.polygonOffset(1, 0);
@@ -138,7 +142,7 @@ var Simulator = function(canvas, width, height) {
         gl.polygonOffset(0, 0);
         gl.disable(gl.POLYGON_OFFSET_FILL);
 
-        gl.uniform3fv(quadProgram.uniformLocations['u_color'], outlineColor);
+        gl.uniform3fv(quadProgram.uniformLocations['u_shade'], outlineColor);
 
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeOutlineIndexBuffer);
         gl.drawElements(gl.LINES, cubeOutlineIndices.length, gl.UNSIGNED_SHORT, 0);
