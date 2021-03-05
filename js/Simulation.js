@@ -63,12 +63,12 @@ var Simulator = function(canvas, width, height) {
     gl.bufferData(gl.ARRAY_BUFFER, cubeData, gl.STATIC_DRAW);
 
     var cubeIndices = new Int32Array([
-        0, 3, 1, 2, // Top
-        1, 2, 7, 6, // Front
-        0, 1, 4, 7, // Left
-        4, 5, 7, 6, // Bottom
-        0, 3, 4, 5, // Back
-        2, 3, 6, 5, // Right
+        0, 3, 1,  3, 1, 2, // Top
+        1, 2, 7,  2, 7, 6, // Front
+        0, 1, 4,  1, 4, 7, // Left
+        4, 5, 7,  5, 7, 6, // Bottom
+        0, 3, 4,  3, 4, 5, // Back
+        2, 3, 6,  3, 6, 5, // Right
     ]);
 
     var cubeIndexBuffer = gl.createBuffer();
@@ -123,7 +123,7 @@ var Simulator = function(canvas, width, height) {
         gl.enable(gl.POLYGON_OFFSET_FILL);
 
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeIndexBuffer);
-        gl.drawElements(gl.TRIANGLE_STRIP, cubeIndices.length, gl.UNSIGNED_SHORT, 0);
+        gl.drawElements(gl.TRIANGLES, cubeIndices.length, gl.UNSIGNED_SHORT, 0);
 
         // Draw Cube Edges
         gl.polygonOffset(0, 0);
