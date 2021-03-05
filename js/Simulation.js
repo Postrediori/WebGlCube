@@ -1,5 +1,6 @@
 
 var QUAD_VERTEX_SOURCE = [
+    '#version 100',
     'precision highp float;',
     
     'attribute vec3 a_position;',
@@ -14,6 +15,7 @@ var QUAD_VERTEX_SOURCE = [
 ].join('\n');
 
 var QUAD_FRAGMENT_SOURCE = [
+    '#version 100',
     'precision highp float;',
 
     'uniform vec3 u_color;',
@@ -31,6 +33,13 @@ var Simulator = function(canvas, width, height) {
     var rotationAngle = 0.0;
 
     var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if (!gl) {
+        console.log("No WebGL");
+    }
+    else {
+        console.log("WebGL Ver: "+gl.getParameter(gl.VERSION));
+        console.log("WebGL Shader Language Ver: "+gl.getParameter(gl.SHADING_LANGUAGE_VERSION));
+    }
     
     gl.clearColor.apply(gl, CLEAR_COLOR);
     gl.enable(gl.DEPTH_TEST);
